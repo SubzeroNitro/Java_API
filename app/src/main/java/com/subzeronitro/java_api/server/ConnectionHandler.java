@@ -23,6 +23,16 @@ public class ConnectionHandler implements Runnable {
 		in = clientSocket.getInputStream();
 	}
 	
+	@Override
+	public void finalize() {
+		try {
+			clientSocket.close();
+		}
+		catch (IOException e) {
+			logger.log(Level.SEVERE, "Exception in method 'finalize'", e);
+		}
+	}
+	
 	public void run() {
 		try {
 			byte[] b = new byte[1024];
@@ -36,6 +46,14 @@ public class ConnectionHandler implements Runnable {
 			}
 			
 			logger.log(Level.INFO, response);
+		
+			out.write("HTTP/1.1 301\n".getBytes());
+			out.write("Content-Type: application/binary\n".getBytes());
+			out.write("Content-Length: 0\n".getBytes());
+			out.write("Location: https://www.youtube.com/watch?v=dQw4w9WgXcQ\n".getBytes());
+			out.write("\n".getBytes());
+			
+			logger.log(Level.INFO, "https://www.youtube.com/watch?v=dQw4w9WgXcQ'");
 		}
 		catch (IOException e) {
 			logger.log(Level.SEVERE, "Exception in method 'run'", e);
