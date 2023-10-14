@@ -11,5 +11,6 @@ public class App {
 		logger.log(Level.INFO, "Start of application");
 		
 		Server server = new Server(4200);
+		server.start();
 	}
 }
