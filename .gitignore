@@ -25,3 +25,11 @@ replay_pid*
 
 .settings/
 bin/
+
+.gradle
+.build
+
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
