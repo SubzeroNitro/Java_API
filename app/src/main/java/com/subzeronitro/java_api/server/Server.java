@@ -20,7 +20,12 @@ public class Server {
 	public Server(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
+			
+			logger.log(Level.INFO, "Server socket created!");
+			
 			clientSocket = serverSocket.accept();
+			
+			logger.log(Level.INFO, "Connection established!");
 			
 			out = clientSocket.getOutputStream();
 			in = clientSocket.getInputStream();
