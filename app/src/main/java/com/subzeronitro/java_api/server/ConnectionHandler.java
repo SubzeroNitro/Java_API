@@ -59,4 +59,10 @@ public class ConnectionHandler implements Runnable {
 			logger.log(Level.SEVERE, "Exception in method 'run'", e);
 		}
 	}
+	
+	public void ParseHttpRequest() {
+		
+	}
+	
+	
 }
