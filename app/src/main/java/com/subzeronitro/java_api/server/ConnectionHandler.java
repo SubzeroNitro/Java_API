@@ -4,29 +4,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.DataFormatException;
+
+import com.subzeronitro.java_api.utilities.http.HttpRequest;
 
 public class ConnectionHandler implements Runnable {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	
+
 	private final Socket clientSocket;
 	private final OutputStream out;
 	private final InputStream in;
 	
+	private static final int REQUEST_ARRAY_SIZE = 1024;
+	
 	ConnectionHandler(Socket socket) throws IOException {
-		clientSocket = socket;
+		this.clientSocket = socket;
 		
 		logger.log(Level.INFO, "Connection established!");
 		
-		out = clientSocket.getOutputStream();
-		in = clientSocket.getInputStream();
+		this.out = clientSocket.getOutputStream();
+		this.in = clientSocket.getInputStream();
 	}
 	
 	@Override
 	public void finalize() {
 		try {
-			clientSocket.close();
+			this.clientSocket.close();
 		}
 		catch (IOException e) {
 			logger.log(Level.SEVERE, "Exception in method 'finalize'", e);
@@ -35,17 +41,10 @@ public class ConnectionHandler implements Runnable {
 	
 	public void run() {
 		try {
-			byte[] b = new byte[1024];
-			int length = in.read(b);
+			byte[] rawRequest = new byte[REQUEST_ARRAY_SIZE];
+			in.read(rawRequest);
 			
-			String response = "";
-			
-			for (int i = 0; i < length; i++)
-			{
-				response += (char)b[i];
-			}
-			
-			logger.log(Level.INFO, response);
+			HttpRequest request = new HttpRequest(new String(rawRequest, StandardCharsets.UTF_8));
 		
 			out.write("HTTP/1.1 301\n".getBytes());
 			out.write("Content-Type: application/binary\n".getBytes());
@@ -56,13 +55,10 @@ public class ConnectionHandler implements Runnable {
 			logger.log(Level.INFO, "https://www.youtube.com/watch?v=dQw4w9WgXcQ'");
 		}
 		catch (IOException e) {
-			logger.log(Level.SEVERE, "Exception in method 'run'", e);
+			logger.log(Level.WARNING, "Exception in method 'run'", e);
 		}
-	}
-	
-	public void ParseHttpRequest() {
-		
-	}
-	
-	
+		catch (DataFormatException e) {
+			logger.log(Level.WARNING, "Exception in method 'run': Invalid request format", e);
+		}
+	}	
 }

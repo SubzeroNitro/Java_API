@@ -26,8 +26,8 @@ public class Server {
 	@Override
 	protected void finalize() {
 		try {
-			serverSocket.close();
-			threadPool.shutdown();
+			this.serverSocket.close();
+			this.threadPool.shutdown();
 		} 
 		catch (Exception e) {
 			logger.log(Level.SEVERE, "Exception in method 'finalize'", e);
@@ -35,18 +35,18 @@ public class Server {
 	}
 	
 	public void start() {
-		logger.log(Level.INFO, "Listening for connections on port " + serverSocket.getLocalPort() + "...");	
+		logger.log(Level.INFO, "Listening for connections on port " + this.serverSocket.getLocalPort() + "...");	
 		
 		try {
 			while (true) {
 				ConnectionHandler handler = new ConnectionHandler(this.serverSocket.accept());
-				threadPool.execute(handler);
+				this.threadPool.execute(handler);
 			}
 		}
 		catch (IOException e) {
 			logger.log(Level.SEVERE, "IOException in method 'start'", e);
 			
-			threadPool.shutdown();
+			this.threadPool.shutdown();
 		}
 	}
 }
