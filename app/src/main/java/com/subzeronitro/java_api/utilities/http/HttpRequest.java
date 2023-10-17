@@ -1,16 +1,18 @@
 package com.subzeronitro.java_api.utilities.http;
 
-import java.util.Arrays;
 import java.util.zip.DataFormatException;
 
 public class HttpRequest {
 	private HttpRequestHeader header = new HttpRequestHeader();
+	private String body;
 	
 	public HttpRequest(String request) throws DataFormatException {
 		String[] splitRequest = request.split("\n\n", 1);
 		
+		this.body = splitRequest[1];
+		
 		try {
-			parseRequestHeader(splitRequest[0]);		
+			this.parseRequestHeader(splitRequest[0]);	
 		}
 		catch (DataFormatException e) {
 			throw e;
@@ -77,5 +79,13 @@ public class HttpRequest {
 			
 			this.header.fields.put(key, value);
 		}
+	}
+	
+	public HttpRequestHeader getHeader() {
+		return this.header;
+	}
+	
+	public String getBody() {
+		return this.body;
 	}
 }
