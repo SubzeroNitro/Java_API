@@ -42,7 +42,38 @@ public enum HttpStatus {
 	REQUEST_TIMEOUT					(408, "Request Timeout"),
 	CONFLICT						(409, "Conflict"),
 	GONE							(410, "Gone"),
-	LENGTH_REQUIRED					(411, "Length Required");
+	LENGTH_REQUIRED					(411, "Length Required"),
+	PRECONDITION_FAILED				(412, "Precondition Failed"),
+	PAYLOAD_TOO_LARGE				(413, "Payload Too Large"),
+	URI_TOO_LONG					(414, "URI Too Long"),
+	UNSUPPORTED_MEDIA_TYPE			(415, "Unsupported Media Type"),
+	RANGE_NOT_SATISFIABLE			(416, "Range Not Satisfiable"),
+	EXPECTATION_FAILED				(417, "Expectation Failed"),
+	IM_A_TEAPOT						(418, "I'm A Teapot"),
+	MISDIRECTED_REQUEST				(419, "Misdirected Request"),
+	UNPROCESSABLE_CONTENT			(420, "Unprocessable Content"),
+	LOCKED							(421, "Locked"),
+	FAILED_DEPENDENCY				(422, "Failed Dependency"),
+	TOO_EARLY						(423, "Too Early"),
+	UPGRADE_REQUIRED				(424, "Upgrade Required"),
+	PRECONDITION_REQUIRED			(425, "Precondition Required"),
+	TOO_MANY_REQUIRED				(426, "Too Many Required"),
+	REQUEST_HEADER_FIELDS_TOO_LARGE	(427, "Request Header Fields Too Large"),
+	UNAVAILABLE_FOR_LEGAL_REASONS	(451, "Unavailable For Legal Reasons"),
+	
+	// Server Error Responses
+	
+	INTERNAL_SERVER_ERROR			(500, "Internal Server Error"),
+	NOT_IMPLEMENTED					(501, "Not Implemented"),
+	BAD_GATEWAY						(502, "Bad Gateway"),
+	SERVICE_UNAVAILABLE				(503, "Service Unavailable"),
+	GATEWAY_TIMEOUT					(504, "Gateway Timeout"),
+	HTTP_VERSION_NOT_SUPPORTED		(505, "HTTP Version Not Supported"),
+	VARIANT_ALSO_NEGOTIATES			(506, "Variant Also Negotiates"),
+	INSUFFICIENT_STORAGE			(507, "Insufficient Storage"),
+	LOOP_DETECTED					(508, "Loop Detected"),
+	NOT_EXTENDED					(509, "Not Extended"),
+	NETWORK_AUTHENTICATION_REQUIRED	(510, "Network Authentication Required");
 	
 	public final int code;
 	public final String description;
