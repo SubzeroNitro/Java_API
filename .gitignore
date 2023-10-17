@@ -37,3 +37,5 @@ app/build.gradle.kts
 
 app/bin/
 app/.settings/
+# Ignore Gradle build output directory
+build

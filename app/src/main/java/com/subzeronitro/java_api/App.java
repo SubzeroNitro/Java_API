@@ -10,7 +10,7 @@ public class App {
 	public static void main(String[] args) {
 		logger.log(Level.INFO, "Start of application");
 		
-		Server server = new Server(40);
+		Server server = new Server(80);
 		server.start();
 	}
 }
