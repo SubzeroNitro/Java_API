@@ -2,12 +2,14 @@ package com.subzeronitro.java_api.utilities.http;
 
 public enum HttpStatus {
 	// Information Responses
+	
 	CONTINUE						(100, "Continue"),
 	SWITCHING_PROTOCOLS				(101, "Switching Protocols"),
 	PROCESSING						(102, "Processing"),
 	EARLY_HINTS						(103, "Early Hints"),
 	
 	// Successful Responses
+	
 	OK								(200, "OK"),
 	CREATED							(201, "Created"),
 	ACCEPTED						(202, "Accepted"),
@@ -20,6 +22,7 @@ public enum HttpStatus {
 	IM_USED							(209, "IM Used"),
 	
 	// Redirection Responses
+	
 	MULTIPLE_CHOICES				(300, "Multiple Choices"),
 	MOVED_PERMANENTLY				(301, "Moved Permanently"),
 	FOUND							(302, "Found"),
@@ -31,6 +34,7 @@ public enum HttpStatus {
 	PERMANENT_REDIRECT				(308, "Permanent Redirect"),
 	
 	// Client Error Responses
+	
 	BAD_REQUEST						(400, "Bad Request"),
 	UNAUTHORIZED					(401, "Unauthorized"),
 	PAYMENT_REQUIRED				(402, "Payment Required"),
