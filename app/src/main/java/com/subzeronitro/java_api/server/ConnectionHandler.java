@@ -18,7 +18,7 @@ public class ConnectionHandler implements Runnable {
 	private final OutputStream out;
 	private final InputStream in;
 	
-	private static final int REQUEST_ARRAY_SIZE = 1024;
+	private static final int MAX_ARRAY_SIZE = 1024;
 	
 	ConnectionHandler(Socket socket) throws IOException {
 		this.clientSocket = socket;
@@ -41,7 +41,7 @@ public class ConnectionHandler implements Runnable {
 	
 	public void run() {
 		try {
-			byte[] rawRequest = new byte[REQUEST_ARRAY_SIZE];
+			byte[] rawRequest = new byte[MAX_ARRAY_SIZE];
 			in.read(rawRequest);
 			
 			HttpRequest request = new HttpRequest(new String(rawRequest, StandardCharsets.UTF_8));

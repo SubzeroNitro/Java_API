@@ -45,16 +45,14 @@ public class HttpRequest {
 
 			for (String parameter : parameters) {
 				String[] pair = parameter.split("=", 1);
+				String key = pair[0];
+				String value = pair[1];
 				
-				if (pair.length != 2) {
-					throw new DataFormatException("Invalid parameter: " + parameter);
+				if (this.header.uri.parameters.containsKey(key)) {
+					throw new DataFormatException("Repeated parameter in URI: '" + key + "'");
 				}
 				
-				if (this.header.uri.parameters.containsKey(pair[0])) {
-					throw new DataFormatException("Repeated parameter in URI");
-				}
-				
-				this.header.uri.parameters.put(pair[0], pair[1]);
+				this.header.uri.parameters.put(key, value);
 			}
 			
 			if (sectionsAfterPath.length == 2) {
@@ -62,9 +60,22 @@ public class HttpRequest {
 			}
 		}
 		
-		if (!Arrays.asList(HttpProtocol.versions).contains(protocolVersion)) {
-			
+		this.header.protocolVersion = HttpVersion.fromString(protocolVersion);
+		
+		if (this.header.protocolVersion == HttpVersion.INVALID) {
+			throw new DataFormatException("Invalid HTTP protocol version: " + protocolVersion);
 		}
-	
+		
+		for (int i = 1; i < lines.length; i++) {
+			String[] pair = lines[i].split(":", 1);
+			String key = pair[0];
+			String value = pair[1];
+			
+			if (this.header.fields.containsKey(key)) {
+				throw new DataFormatException("Repeated field in header: '" + key + "'");
+			}
+			
+			this.header.fields.put(key, value);
+		}
 	}
 }

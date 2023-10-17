@@ -1,12 +1,10 @@
 package com.subzeronitro.java_api.utilities.http;
 
+import java.util.HashMap;
+
 public class HttpRequestHeader {
 	public HttpMethod method;
 	public HttpURI uri = new HttpURI();
-	public String protocolVersion;
-	public String userAgent;
-	public String[] contentTypes;
-	public String[] languages;
-	public String[] encodings;
-	public boolean keepAlive;
+	public HttpVersion protocolVersion;
+	public HashMap<String, String> fields = new HashMap<String, String>();
 }
