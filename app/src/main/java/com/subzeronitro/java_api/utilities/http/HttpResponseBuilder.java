@@ -1,5 +1,7 @@
 package com.subzeronitro.java_api.utilities.http;
 
+import java.util.zip.DataFormatException;
+
 public class HttpResponseBuilder {
 	private HttpResponseHeader header;
 	private String body;
@@ -22,6 +24,13 @@ public class HttpResponseBuilder {
 	
 	public void setBody(String body) {
 		this.body = body;
+	}
+	
+	public void setContentLength(int length) throws DataFormatException {
+		if (length < 0)
+		{
+			throw new DataFormatException("Negative content length provided");
+		}
 	}
 	
 	public HttpResponse build() {
