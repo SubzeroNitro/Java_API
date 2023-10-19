@@ -1,6 +1,8 @@
 package com.subzeronitro.java_api.utilities.http;
 
 public enum HttpStatus {
+	INVALID							(0, "Invalid"),
+	
 	// Information Responses
 	
 	CONTINUE						(100, "Continue"),
