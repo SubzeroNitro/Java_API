@@ -26,11 +26,17 @@ public class HttpResponseBuilder {
 		this.body = body;
 	}
 	
-	public void setContentLength(int length) throws DataFormatException {
-		if (length < 0)
+	public void setContentType(String contentType) {
+		this.header.fields.put("Content-Type", contentType);
+	}
+	
+	public void setContentLength(int contentLength) throws DataFormatException {
+		if (contentLength < 0)
 		{
-			throw new DataFormatException("Negative content length provided");
+			throw new DataFormatException("Illegal content length");
 		}
+		
+		this.header.fields.put("Content-Length", Integer.toString(contentLength));
 	}
 	
 	public HttpResponse build() {
