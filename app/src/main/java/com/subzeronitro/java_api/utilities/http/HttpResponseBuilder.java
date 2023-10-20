@@ -6,6 +6,10 @@ public class HttpResponseBuilder {
 	private HttpResponseHeader header;
 	private String body;
 	
+	public HttpResponseBuilder() {
+		this.header = new HttpResponseHeader();
+	}
+	
 	public HttpResponseBuilder setHeader(HttpResponseHeader header) {
 		this.header = header;
 		

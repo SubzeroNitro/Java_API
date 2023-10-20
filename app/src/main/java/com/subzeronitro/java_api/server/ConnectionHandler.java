@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import java.util.zip.DataFormatException;
 
 import com.subzeronitro.java_api.utilities.http.HttpRequest;
+import com.subzeronitro.java_api.utilities.http.HttpResponse;
 import com.subzeronitro.java_api.utilities.http.HttpResponseBuilder;
 import com.subzeronitro.java_api.utilities.http.HttpStatus;
 import com.subzeronitro.java_api.utilities.http.HttpVersion;
@@ -37,7 +38,7 @@ public class ConnectionHandler implements Runnable {
 		}
 	}
 	
-	public void run(Socket socket) {
+	public void run() {
 		try {
 			OutputStream out = clientSocket.getOutputStream();
 			InputStream in = clientSocket.getInputStream();
@@ -47,15 +48,30 @@ public class ConnectionHandler implements Runnable {
 			
 			HttpRequest request = new HttpRequest(new String(rawRequest, StandardCharsets.UTF_8));
 		
+			String html = "<!doctype html>"
+					+ "<html>"
+					+ "<head>"
+					+ "<title>This is a title</title>"
+					+ "</head>"
+					+ "<body>"
+					+ "<h1>This is a header!</h1>"
+					+ "<p>This is a paragraph!</p>"
+					+ "</body>"
+					+ "</html>";
+			
 			HttpResponse response = new HttpResponseBuilder()
 					.setProtocolVersion(HttpVersion.V11)
-					.setStatus(HttpStatus.FOUND)
-					.setContentType("application/binary")
-					.setContentLength(0)
-					.setLocation("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+					.setStatus(HttpStatus.OK)
+					.setContentType("text/html")
+					.setContentLength(html.length())
+					.setBody(html)
 					.build();
 			
+			String generatedResponse = response.generateResponse();
 			
+			logger.log(Level.INFO, generatedResponse);
+			
+			out.write(generatedResponse.getBytes());
 		}
 		catch (IOException e) {
 			logger.log(Level.WARNING, "Exception in method 'run'", e);

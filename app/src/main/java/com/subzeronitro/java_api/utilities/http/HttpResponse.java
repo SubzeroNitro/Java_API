@@ -31,13 +31,17 @@ public class HttpResponse {
 			throw new DataFormatException("Invalid HTTP status");
 		}
 		
-		resultWrapper.value += this.header.protocolVersion.value + " " + this.header.status + " " + this.header.status.description + "\n";
+		resultWrapper.value += this.header.protocolVersion.value + " " + this.header.status.code + " " + this.header.status.description + "\n";
 		
 		this.header.fields.forEach((key, value) -> {
 			resultWrapper.value += key + ": " + value + "\n";
 		});
 		
-		resultWrapper.value += "\n" + this.body;
+		resultWrapper.value += "\n";
+		
+		if (this.body != null) {
+			resultWrapper.value += this.body;
+		}
 		
 		return resultWrapper.value;
 
