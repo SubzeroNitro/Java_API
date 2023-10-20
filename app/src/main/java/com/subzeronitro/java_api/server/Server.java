@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -39,14 +40,18 @@ public class Server {
 		
 		try {
 			while (true) {
-				ConnectionHandler handler = new ConnectionHandler(this.serverSocket.accept());
-				this.threadPool.execute(handler);
+				Socket socket = this.serverSocket.accept();
+				
+				run(socket);
 			}
 		}
 		catch (IOException e) {
 			logger.log(Level.SEVERE, "IOException in method 'start'", e);
-			
-			this.threadPool.shutdown();
 		}
+	}
+	
+	private void run(Socket socket) {
+		ConnectionHandler handler = new ConnectionHandler(socket);
+		this.threadPool.execute(handler);
 	}
 }

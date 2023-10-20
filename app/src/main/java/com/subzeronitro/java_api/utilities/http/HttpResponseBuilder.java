@@ -6,37 +6,57 @@ public class HttpResponseBuilder {
 	private HttpResponseHeader header;
 	private String body;
 	
-	public void setHeader(HttpResponseHeader header) {
+	public HttpResponseBuilder setHeader(HttpResponseHeader header) {
 		this.header = header;
+		
+		return this;
 	}
 	
-	public void setProtocolVersion(HttpVersion protocolVersion) {
+	public HttpResponseBuilder setProtocolVersion(HttpVersion protocolVersion) {
 		this.header.protocolVersion = protocolVersion;
+		
+		return this;
 	}
 	
-	public void setStatus(HttpStatus status) {
+	public HttpResponseBuilder setStatus(HttpStatus status) {
 		this.header.status = status;
+		
+		return this;
 	}
 	
-	public void setField(String key, String value) {
+	public HttpResponseBuilder setField(String key, String value) {
 		this.header.fields.put(key, value);
+		
+		return this;
 	}
 	
-	public void setBody(String body) {
+	public HttpResponseBuilder setBody(String body) {
 		this.body = body;
+		
+		return this;
 	}
 	
-	public void setContentType(String contentType) {
+	public HttpResponseBuilder setContentType(String contentType) {
 		this.header.fields.put("Content-Type", contentType);
+		
+		return this;
 	}
 	
-	public void setContentLength(int contentLength) throws DataFormatException {
+	public HttpResponseBuilder setContentLength(int contentLength) throws DataFormatException {
 		if (contentLength < 0)
 		{
 			throw new DataFormatException("Illegal content length");
 		}
 		
 		this.header.fields.put("Content-Length", Integer.toString(contentLength));
+		
+		return this;
+	}
+	
+	public HttpResponseBuilder setLocation(String url) {
+		this.header.fields.put("Location", url);
+		
+		return this;
 	}
 	
 	public HttpResponse build() {
